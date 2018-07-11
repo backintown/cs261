@@ -1,7 +1,8 @@
 /* CS261- Assignment 1 - Q.2*/
-/* Name:
- * Date:
- * Solution description:
+/* Name: Alex Cheng
+ * Date: 7/11/2018
+ * Solution description: This program demonstrates the concept of passing values
+ * into functions in C.
  */
 #include <stdio.h>
 #include <stdlib.h>

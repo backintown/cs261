@@ -1,7 +1,10 @@
 /* CS261- Assignment 1 - Q.1*/
-/* Name:
- * Date:
- * Solution description:
+/* Name: Alex Cheng
+ * Date: 7/11/2018
+ * Solution description: This program creates an array of student structs and
+ * randomly assigns each student an ID between 0 and 10 using the Fisher-Yates
+ * shuffle and gives them scores from 0 to 100. It then sorts them by ID and
+ * displays the students along with the max, min, and average scores.
  */
 
 #include <math.h>

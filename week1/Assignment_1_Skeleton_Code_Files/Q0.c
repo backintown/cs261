@@ -1,7 +1,8 @@
 /* CS261- Assignment 1 - Q. 0*/
 /* Name: Alex Cheng
  * Date: 6/29/2018
- * Solution description:
+ * Solution description: This program demonstrates the concept of pointer an
+ * addresses in C.
  */
 
 #include <stdio.h>
@@ -40,9 +41,18 @@ int main() {
   fooA(&x);
   /*Print the value of x*/
   printf("x: %d\n", x);
+  /* Is the value of x different than the value that was printed at first? Why
+   * or why not?
+   * Yes, because we changed the value in the address that the
+   * pointer was pointing to. */
+
   /*Call fooB() with the address of x*/
   fooB(&x);
   /*Print the value and address of x*/
   printf("x: %d, Address: %p\n", x, &x);
+  /* Are the value and address of x different than the value and address that
+   * were printed before the call to fooB(..)? Why or why not?
+   * No, all we did was change the copy of the address we passed into fooB. The
+   * value of x or its address were not changed. */
   return 0;
 }

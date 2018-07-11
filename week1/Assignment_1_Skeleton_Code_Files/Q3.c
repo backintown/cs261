@@ -1,7 +1,9 @@
 /* CS261- Assignment 1 - Q.3*/
 /* Name: Alex Cheng
  * Date: 7/11/2018
- * Solution description: This program converts
+ * Solution description: This program converts strings into lower camel case by
+ * first turning them into words separated by underscores then converting them
+ * to camel case.
  */
 
 #include <stdio.h>
