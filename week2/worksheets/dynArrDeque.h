@@ -80,7 +80,10 @@ void dequeRemoveFront(struct deque *d) {
   d->size--;
 }
 
-void dequeRemoveBack(struct deque *d) { d->size--; }
+void dequeRemoveBack(struct deque *d) {
+  assert(d->size > 0);
+  d->size--;
+}
 
 TYPE dequeFront(struct deque *d) { return d->data[d->beg]; }
 
