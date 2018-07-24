@@ -5,8 +5,8 @@ implement
 @oregonstate.edu
  * email address below:
  *
- * Name:
- * Email:
+ * Name: Alex Cheng
+ * Email: chengale@oregonstate.edu
  */
 
 #include <assert.h>
