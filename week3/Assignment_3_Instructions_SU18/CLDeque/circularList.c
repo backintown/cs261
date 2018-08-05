@@ -168,10 +168,14 @@ void circularListPrint(struct CircularList *list) {
  */
 void circularListReverse(struct CircularList *list) {
   // FIXME: you must write this
-  struct Link *tmp = list->sentinel->prev;
-  while (tmp != list->sentinel) {
-    printf("%g ", tmp->value);
-    tmp = tmp->prev;
+  struct Link *curr = list->sentinel->next;
+  list->sentinel->next = list->sentinel->prev;
+  list->sentinel->prev = curr;
+  struct Link *tmp;
+  while (curr != list->sentinel) {
+    tmp = curr->prev;
+    curr->prev = curr->next;
+    curr->next = tmp;
+    curr = curr->prev;
   }
-  printf("\n");
 }

@@ -215,3 +215,17 @@ void linkedListRemove(struct LinkedList *list, TYPE value) {
     tmp = tmp->next;
   }
 }
+
+void linkedListReverse(struct LinkedList *list) {
+  struct Link *tmp = list->frontSentinel;
+  list->frontSentinel = list->backSentinel;
+  list->backSentinel = tmp;
+  struct Link *curr = tmp; // start at the front which is now the back sentinel
+  while (curr != 0) { // will end when we get to front sentinel (back) which has
+                      // a prev value of null
+    tmp = curr->next;
+    curr->next = curr->prev;
+    curr->prev = tmp;
+    curr = curr->prev; // go to previous node which is the next node
+  }
+}

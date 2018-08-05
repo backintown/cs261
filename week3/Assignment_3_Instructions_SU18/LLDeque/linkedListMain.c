@@ -10,6 +10,8 @@ int main() {
   linkedListAddFront(l, (TYPE)5);
   linkedListAddBack(l, (TYPE)6);
   linkedListPrint(l);
+  linkedListReverse(l);
+  linkedListPrint(l);
   printf("%i\n", linkedListFront(l));
   printf("%i\n", linkedListBack(l));
   linkedListRemoveFront(l);
@@ -23,6 +25,8 @@ int main() {
   linkedListAdd(k, (TYPE)13);
   linkedListAdd(k, (TYPE)14);
   linkedListRemove(k, (TYPE)11);
+  linkedListPrint(k);
+  linkedListReverse(k);
   linkedListPrint(k);
   linkedListDestroy(k);
   return 0;
