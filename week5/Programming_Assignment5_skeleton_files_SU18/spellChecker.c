@@ -48,6 +48,7 @@ void loadDictionary(FILE *file, HashMap *map) {
   char *word = nextWord(file);
   while (word != 0) {
     hashMapPut(map, word, 1);
+    free(word);
     word = nextWord(file);
   }
 }
@@ -110,66 +111,78 @@ int main(int argc, const char **argv) {
     // copy word to display later
     char original[strlen(inputBuffer)];
     strcpy(original, inputBuffer);
+
     // convert to all lowercase
     for (int i = 0; inputBuffer[i]; i++) {
       inputBuffer[i] = tolower(inputBuffer[i]);
     }
     if (strcmp(inputBuffer, "quit") == 0) {
       quit = 1;
-    } else {
-      int found = 0;
-      int distances[5] = {0};
-      char *words[5] = {0};
-      // loop through hashmap buckets
-      for (int i = 0; i < hashMapSize(map); i++) {
-        if (found)
-          break;
-        // loop through links in each bucket
-        struct HashLink *temp = map->table[i];
+      break;
+    }
+    int found = 0;
+    int distances[5] = {0};
+    char *words[5];
+    for (int i = 0; i < 5; i++) {
+      words[i] = malloc(sizeof(char) * 256);
+      assert(words[i] != 0);
+    }
+    // loop through hashmap buckets
+    for (int i = 0; i < hashMapCapacity(map); i++) {
+      // loop through links in each bucket
+      HashLink *temp = map->table[i];
+      if (temp != 0) {
         while (temp != 0) {
           if (strcmp(temp->key, inputBuffer) == 0) {
             printf("The inputted word \"%s\" is spelled correctly\n", original);
             found = 1;
-            break;
-          } else {
+          }
+
+          else {
             int lev = levenshtein(temp->key, inputBuffer);
-            if (!distances[4]) // fill array first
+            // fill array first
+            if (!distances[4])
               for (int i = 0; i < 5; i++) {
                 if (distances[i] == 0) {
                   distances[i] = lev;
-                  words[i] = temp->key;
+                  strcpy(words[i], temp->key);
                 }
               }
-            else {
-              // find the max of array and replace the word if its distance is
-              // greater than the lev we calculated
-              int max = distances[0];
-              int maxIdx = 0;
-              for (int i = 0; i < 5; i++) {
-                if (distances[i] > max) {
-                  max = distances[i];
-                  maxIdx = i;
-                }
+            // find the max of array and replace the word if its distance is
+            // greater than the lev we calculated
+            int max = distances[0];
+            int maxIdx = 0;
+            for (int i = 0; i < 5; i++) {
+              if (distances[i] > max) {
+                max = distances[i];
+                maxIdx = i;
               }
-              if (max > lev) {
-                distances[maxIdx] = lev;
-                words[maxIdx] = temp->key;
-              }
+            }
+            if (max > lev) {
+              distances[maxIdx] = lev;
+              strcpy(words[maxIdx], temp->key);
             }
           }
           temp = temp->next;
         }
-      }
-      if (!found) {
-        // no matches, print out close words
-        printf("The inputted word \"%s\" is spelled incorrectly.\n", original);
-        printf("Did you mean ... ?\n");
-        for (int i = 0; i < 5; i++) {
-          printf("%s\n", words[i]);
-        }
-      }
-      found = 0; // reset done for next word
+
+      } else if (found)
+        break;
     }
+
+    if (!found) {
+      // no matches, print out close words
+      printf("The inputted word \"%s\" is spelled incorrectly.\n", original);
+      printf("Did you mean...?\n");
+      for (int i = 0; i < 5; i++) {
+        printf("%s\n", words[i]);
+      }
+    }
+
+    for (int i = 0; i < 5; i++) {
+      free(words[i]);
+    }
+
   } while (!quit);
 
   hashMapDelete(map);

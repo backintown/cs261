@@ -83,7 +83,9 @@ void hashMapCleanUp(HashMap *map) {
       temp = temp->next;
       hashLinkDelete(link);
     }
+    free(temp);
   }
+  free(map->table);
   map->size = 0;
 }
 
